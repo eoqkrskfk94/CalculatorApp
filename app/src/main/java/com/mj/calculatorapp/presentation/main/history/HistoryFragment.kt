@@ -22,5 +22,10 @@ class HistoryFragment : BaseFragment<MainViewModel, FragmentHistoryBinding>() {
 
     }
 
+    companion object {
+        const val TAG = "HistoryFragment"
+        fun newInstance() = HistoryFragment()
+    }
+
 
 }

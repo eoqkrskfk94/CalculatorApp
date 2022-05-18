@@ -22,5 +22,10 @@ class CalculatorFragment : BaseFragment<MainViewModel, FragmentCalculatorBinding
 
     }
 
+    companion object {
+        const val TAG = "CalculatorFragment"
+        fun newInstance() = CalculatorFragment()
+    }
+
 
 }

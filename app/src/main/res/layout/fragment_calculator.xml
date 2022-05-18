@@ -1,21 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".presentation.main.calculator.CalculatorFragment">
+        android:layout_height="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:id="@+id/textview_result"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="end|center"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="2 x 1.5 + 6 / 2" />
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_result">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="history" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_ac"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="AC" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardElevation="0dp" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_divide"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/orange"
+                    app:cardElevation="0dp"
+                    app:symbol="@string/divide" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="7" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="8" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="9" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_multiply"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/orange"
+                    app:cardElevation="0dp"
+                    app:symbol="@string/multiply" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="4" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="5" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="6" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_minus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/orange"
+                    app:cardElevation="0dp"
+                    app:symbol="@string/minus" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="0" />
+
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_dot"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="." />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardElevation="0dp" />
+
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/orange"
+                    app:cardElevation="0dp"
+                    app:symbol="@string/equal" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
