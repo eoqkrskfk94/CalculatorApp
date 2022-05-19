@@ -25,7 +25,7 @@ class CalculatorFragment : BaseFragment<MainViewModel, FragmentCalculatorBinding
     }
 
     override fun observeData() {
-        viewModel.equationLiveData.observe(viewLifecycleOwner) {
+        viewModel.formulaLiveData.observe(viewLifecycleOwner) {
             binding.textviewResult.text = it
         }
 
@@ -43,21 +43,21 @@ class CalculatorFragment : BaseFragment<MainViewModel, FragmentCalculatorBinding
     }
 
     private fun setCalculatorButtons() = with(binding) {
-        button0.setOnClickListener { viewModel.addToEquation("0") }
-        button1.setOnClickListener { viewModel.addToEquation("1") }
-        button2.setOnClickListener { viewModel.addToEquation("2") }
-        button3.setOnClickListener { viewModel.addToEquation("3") }
-        button4.setOnClickListener { viewModel.addToEquation("4") }
-        button5.setOnClickListener { viewModel.addToEquation("5") }
-        button6.setOnClickListener { viewModel.addToEquation("6") }
-        button7.setOnClickListener { viewModel.addToEquation("7") }
-        button8.setOnClickListener { viewModel.addToEquation("8") }
-        button9.setOnClickListener { viewModel.addToEquation("9") }
-        buttonDot.setOnClickListener { viewModel.addToEquation(".") }
-        buttonPlus.setOnClickListener { viewModel.addToEquation(getString(R.string.plus)) }
-        buttonMinus.setOnClickListener { viewModel.addToEquation(getString(R.string.minus)) }
-        buttonMultiply.setOnClickListener { viewModel.addToEquation(getString(R.string.multiply)) }
-        buttonDivide.setOnClickListener { viewModel.addToEquation(getString(R.string.divide)) }
+        button0.setOnClickListener { viewModel.addToFormula("0") }
+        button1.setOnClickListener { viewModel.addToFormula("1") }
+        button2.setOnClickListener { viewModel.addToFormula("2") }
+        button3.setOnClickListener { viewModel.addToFormula("3") }
+        button4.setOnClickListener { viewModel.addToFormula("4") }
+        button5.setOnClickListener { viewModel.addToFormula("5") }
+        button6.setOnClickListener { viewModel.addToFormula("6") }
+        button7.setOnClickListener { viewModel.addToFormula("7") }
+        button8.setOnClickListener { viewModel.addToFormula("8") }
+        button9.setOnClickListener { viewModel.addToFormula("9") }
+        buttonDot.setOnClickListener { viewModel.addToFormula(".") }
+        buttonPlus.setOnClickListener { viewModel.addToFormula(getString(R.string.plus)) }
+        buttonMinus.setOnClickListener { viewModel.addToFormula(getString(R.string.minus)) }
+        buttonMultiply.setOnClickListener { viewModel.addToFormula(getString(R.string.multiply)) }
+        buttonDivide.setOnClickListener { viewModel.addToFormula(getString(R.string.divide)) }
         buttonAc.setOnClickListener { viewModel.clearInput() }
         buttonHistory.setOnClickListener {}
 

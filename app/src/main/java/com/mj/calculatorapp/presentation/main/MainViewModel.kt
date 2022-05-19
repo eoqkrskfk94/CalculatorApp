@@ -3,7 +3,8 @@ package com.mj.calculatorapp.presentation.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.mj.calculatorapp.domain.usecase.CalculateEquationUseCase
+import com.mj.calculatorapp.domain.usecase.CalculateFormulaUseCase
+import com.mj.calculatorapp.domain.usecase.InsertFormulaToHistoryUseCase
 import com.mj.calculatorapp.presentation.base.BaseViewModel
 import com.mj.calculatorapp.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,11 +14,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val calculateEquationUseCase: CalculateEquationUseCase
+    private val calculateFormulaUseCase: CalculateFormulaUseCase,
+    private val insertFormulaToHistoryUseCase: InsertFormulaToHistoryUseCase
 ) : BaseViewModel() {
 
-    private val _equationLiveData = MutableLiveData<String>()
-    val equationLiveData: LiveData<String> = _equationLiveData
+    private val _formulaLiveData = MutableLiveData<String>()
+    val formulaLiveData: LiveData<String> = _formulaLiveData
 
     private val _resultLiveData = MutableLiveData<String>()
     val resultLiveData: LiveData<String> = _resultLiveData
@@ -28,10 +30,10 @@ class MainViewModel @Inject constructor(
     private var inputMode = true
 
     init {
-        _equationLiveData.value = ""
+        _formulaLiveData.value = ""
     }
 
-    fun addToEquation(symbol: String) {
+    fun addToFormula(symbol: String) {
         if (!inputMode) {
             _errorLiveData.value = "AC를 눌러 초기화 후 사용해주세요"
             return
@@ -39,29 +41,34 @@ class MainViewModel @Inject constructor(
 
         when (symbol) {
             "+", "–", "×", "÷" -> {
-                _equationLiveData.value = _equationLiveData.value.plus(" $symbol ")
+                _formulaLiveData.value = _formulaLiveData.value.plus(" $symbol ")
             }
             else -> {
-                _equationLiveData.value = _equationLiveData.value.plus(symbol)
+                _formulaLiveData.value = _formulaLiveData.value.plus(symbol)
             }
         }
     }
 
     fun clearInput() {
-        _equationLiveData.value = ""
+        _formulaLiveData.value = ""
         inputMode = true
     }
 
-    fun getResult(equation: String) {
+    fun getResult(formula: String) {
+        if (formula.split(" ").size == 1) {
+            return
+        }
+
         val handler = CoroutineExceptionHandler { _, exception ->
             println("Exception thrown in one of the children: $exception")
         }
 
         inputMode = false
         viewModelScope.launch(handler) {
-            when (val result = calculateEquationUseCase(equation)) {
+            when (val result = calculateFormulaUseCase(formula)) {
                 is Result.Success -> {
                     _resultLiveData.value = result.data ?: ""
+                    insertFormulaToHistoryUseCase(formula)
                 }
                 is Result.Error -> {
                     _errorLiveData.value = "연산하는데 오류가 발생했습니다. 초기화 후 다시 입력해주세요"

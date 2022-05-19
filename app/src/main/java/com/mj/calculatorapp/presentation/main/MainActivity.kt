@@ -21,8 +21,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         supportFragmentManager.beginTransaction().add(R.id.fragment_container_view, CalculatorFragment.newInstance(), CalculatorFragment.TAG).commitAllowingStateLoss()
     }
 
-    override fun observeData() {
-
-    }
+    override fun observeData() { }
 
 }

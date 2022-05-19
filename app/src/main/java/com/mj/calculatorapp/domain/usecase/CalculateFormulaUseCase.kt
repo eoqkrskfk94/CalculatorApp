@@ -6,21 +6,21 @@ import com.mj.calculatorapp.util.Result
 import java.util.*
 import javax.inject.Inject
 
-class CalculateEquationUseCase @Inject constructor(
+class CalculateFormulaUseCase @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) {
 
-    suspend operator fun invoke(equation: String): Result<String> = withContext(dispatcherProvider.default) {
+    suspend operator fun invoke(formula: String): Result<String> = withContext(dispatcherProvider.default) {
         return@withContext try {
-            val result = infixToPostfix(equation)
+            val result = infixToPostfix(formula)
             Result.Success(result)
         } catch (e: Exception) {
             Result.Error(e)
         }
     }
 
-    private fun infixToPostfix(equation: String): String {
-        val infixList = equation.split(" ")
+    private fun infixToPostfix(formula: String): String {
+        val infixList = formula.split(" ")
         val postfixList = mutableListOf<String>()
         val operatorStack = Stack<String>()
 
