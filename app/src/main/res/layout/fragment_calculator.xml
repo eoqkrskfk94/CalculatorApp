@@ -18,10 +18,11 @@
             android:gravity="end|center"
             android:padding="10dp"
             android:textColor="@color/black"
-            android:textSize="50sp"
+            android:textSize="40sp"
+            android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
@@ -30,6 +31,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -165,6 +168,51 @@
                     app:cardColor="@color/orange"
                     app:cardElevation="0dp"
                     app:symbol="@string/minus" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="1" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="2" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/dark_gray"
+                    app:cardElevation="0dp"
+                    app:symbol="3" />
+
+                <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
+                    android:id="@+id/button_plus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:cardColor="@color/orange"
+                    app:cardElevation="0dp"
+                    app:symbol="@string/plus" />
 
             </LinearLayout>
 
