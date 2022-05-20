@@ -18,9 +18,29 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun initViews() {
         super.initViews()
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container_view, CalculatorFragment.newInstance(), CalculatorFragment.TAG).commitAllowingStateLoss()
+        showFragment(CalculatorFragment.newInstance(), CalculatorFragment.TAG)
     }
 
     override fun observeData() { }
+
+    private fun showFragment(fragment: Fragment, tag: String) {
+
+        val findFragment = supportFragmentManager.findFragmentByTag(tag)
+
+        supportFragmentManager.fragments.forEach {
+            supportFragmentManager.beginTransaction()
+                .hide(it)
+                .commitAllowingStateLoss()
+        }
+
+        findFragment?.let {
+            supportFragmentManager.beginTransaction()
+                .show(it)
+                .commitAllowingStateLoss()
+        } ?: kotlin.run {
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container_view, fragment, tag)
+                .commitAllowingStateLoss()
+        }
+    }
 
 }

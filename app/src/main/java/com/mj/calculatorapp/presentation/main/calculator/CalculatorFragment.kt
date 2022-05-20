@@ -5,6 +5,7 @@ import android.text.method.ScrollingMovementMethod
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.mj.calculatorapp.R
 import com.mj.calculatorapp.databinding.FragmentCalculatorBinding
 import com.mj.calculatorapp.presentation.base.BaseFragment
@@ -14,9 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CalculatorFragment : BaseFragment<MainViewModel, FragmentCalculatorBinding>() {
+class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorBinding>() {
 
-    override val viewModel: MainViewModel by activityViewModels()
+    override val viewModel: CalculatorViewModel by viewModels()
     override fun getViewBinding(): FragmentCalculatorBinding = FragmentCalculatorBinding.inflate(layoutInflater)
 
     private lateinit var historyListAdapter: HistoryListAdapter
@@ -34,6 +35,7 @@ class CalculatorFragment : BaseFragment<MainViewModel, FragmentCalculatorBinding
 
     override fun observeData() {
         viewModel.formulaLiveData.observe(viewLifecycleOwner) {
+            println(it)
             binding.textviewResult.text = it
         }
 
