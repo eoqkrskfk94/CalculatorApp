@@ -53,20 +53,20 @@ class CalculatorViewModel @Inject constructor(
         _formulaLiveData.value = formula
     }
 
-    fun addToFormula(symbol: String) {
+    fun insertNumberToFormula(number: String) {
         if (!inputMode) {
             _errorLiveData.value = "AC를 눌러 초기화 후 사용해주세요"
             return
         }
+        _formulaLiveData.value = _formulaLiveData.value.plus(number)
+    }
 
-        when (symbol) {
-            "+", "–", "×", "÷" -> {
-                _formulaLiveData.value = _formulaLiveData.value.plus(" $symbol ")
-            }
-            else -> {
-                _formulaLiveData.value = _formulaLiveData.value.plus(symbol)
-            }
+    fun insertOperatorToFormula(operator: String) {
+        if (!inputMode) {
+            _errorLiveData.value = "AC를 눌러 초기화 후 사용해주세요"
+            return
         }
+        _formulaLiveData.value = _formulaLiveData.value.plus(" $operator ")
     }
 
     fun clearInput() {

@@ -12,7 +12,6 @@ class HistoryListAdapter(
     private val itemClick: (Formula) -> Unit
 ) : ListAdapter<Formula, HistoryListAdapter.ListViewHolder>(diffCallback) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = ViewholderFormulaHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)

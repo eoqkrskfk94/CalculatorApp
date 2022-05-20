@@ -25,11 +25,18 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
     override fun initViews() {
         super.initViews()
         setInputTextView()
-        setCalculatorButtons()
-        setHistoryRecyclerView()
+
+        setNumberButtons()
+        setOperatorButtons()
+
+        setAcButton()
+        setResultButton()
+
+        setHistoryButton()
         setHistoryCloseButton()
         setHistoryDeleteButton()
 
+        setHistoryRecyclerView()
     }
 
 
@@ -56,25 +63,38 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
         binding.textviewResult.movementMethod = ScrollingMovementMethod()
     }
 
-    private fun setCalculatorButtons() = with(binding) {
-        button0.setOnClickListener { viewModel.addToFormula("0") }
-        button1.setOnClickListener { viewModel.addToFormula("1") }
-        button2.setOnClickListener { viewModel.addToFormula("2") }
-        button3.setOnClickListener { viewModel.addToFormula("3") }
-        button4.setOnClickListener { viewModel.addToFormula("4") }
-        button5.setOnClickListener { viewModel.addToFormula("5") }
-        button6.setOnClickListener { viewModel.addToFormula("6") }
-        button7.setOnClickListener { viewModel.addToFormula("7") }
-        button8.setOnClickListener { viewModel.addToFormula("8") }
-        button9.setOnClickListener { viewModel.addToFormula("9") }
-        buttonDot.setOnClickListener { viewModel.addToFormula(".") }
-        buttonPlus.setOnClickListener { viewModel.addToFormula(getString(R.string.plus)) }
-        buttonMinus.setOnClickListener { viewModel.addToFormula(getString(R.string.minus)) }
-        buttonMultiply.setOnClickListener { viewModel.addToFormula(getString(R.string.multiply)) }
-        buttonDivide.setOnClickListener { viewModel.addToFormula(getString(R.string.divide)) }
+
+    private fun setNumberButtons() = with(binding) {
+        button0.setOnClickListener { viewModel.insertNumberToFormula("0") }
+        button1.setOnClickListener { viewModel.insertNumberToFormula("1") }
+        button2.setOnClickListener { viewModel.insertNumberToFormula("2") }
+        button3.setOnClickListener { viewModel.insertNumberToFormula("3") }
+        button4.setOnClickListener { viewModel.insertNumberToFormula("4") }
+        button5.setOnClickListener { viewModel.insertNumberToFormula("5") }
+        button6.setOnClickListener { viewModel.insertNumberToFormula("6") }
+        button7.setOnClickListener { viewModel.insertNumberToFormula("7") }
+        button8.setOnClickListener { viewModel.insertNumberToFormula("8") }
+        button9.setOnClickListener { viewModel.insertNumberToFormula("9") }
+        buttonDot.setOnClickListener { viewModel.insertNumberToFormula(".") }
+    }
+
+    private fun setOperatorButtons() = with(binding) {
+        buttonPlus.setOnClickListener { viewModel.insertOperatorToFormula(getString(R.string.plus)) }
+        buttonMinus.setOnClickListener { viewModel.insertOperatorToFormula(getString(R.string.minus)) }
+        buttonMultiply.setOnClickListener { viewModel.insertOperatorToFormula(getString(R.string.multiply)) }
+        buttonDivide.setOnClickListener { viewModel.insertOperatorToFormula(getString(R.string.divide)) }
+    }
+
+    private fun setAcButton() = with(binding) {
         buttonAc.setOnClickListener { viewModel.clearInput() }
-        buttonHistory.setOnClickListener { openHistoryList() }
+    }
+
+    private fun setResultButton() = with(binding) {
         buttonResult.setOnClickListener { viewModel.getResult(textviewResult.text.toString()) }
+    }
+
+    private fun setHistoryButton() = with(binding) {
+        buttonHistory.setOnClickListener { openHistoryList() }
     }
 
     private fun setHistoryRecyclerView() = with(binding) {
