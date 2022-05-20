@@ -6,12 +6,14 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.mj.calculatorapp.R
 import com.mj.calculatorapp.databinding.FragmentCalculatorBinding
 import com.mj.calculatorapp.presentation.base.BaseFragment
 import com.mj.calculatorapp.presentation.main.MainViewModel
 import com.mj.calculatorapp.presentation.main.calculator.adapter.HistoryListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
@@ -41,12 +43,9 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
 
 
     override fun observeData() {
-        viewModel.formulaLiveData.observe(viewLifecycleOwner) {
-            println(it)
-            binding.textviewResult.text = it
-        }
 
-        viewModel.resultLiveData.observe(viewLifecycleOwner) {
+        viewModel.formulaTextLiveData.observe(viewLifecycleOwner) {
+            println(it)
             binding.textviewResult.text = it
         }
 
@@ -54,8 +53,10 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
             historyListAdapter.submitList(it)
         }
 
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launchWhenStarted {
+            viewModel.errorFlow.collectLatest {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

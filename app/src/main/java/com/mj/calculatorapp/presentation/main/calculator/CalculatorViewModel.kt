@@ -12,6 +12,8 @@ import com.mj.calculatorapp.presentation.base.BaseViewModel
 import com.mj.calculatorapp.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,17 +25,14 @@ class CalculatorViewModel @Inject constructor(
     private val deleteFormulaHistoryUseCase: DeleteFormulaHistoryUseCase
 ) : BaseViewModel() {
 
-    private val _formulaLiveData = MutableLiveData<String>()
-    val formulaLiveData: LiveData<String> = _formulaLiveData
-
-    private val _resultLiveData = MutableLiveData<String>()
-    val resultLiveData: LiveData<String> = _resultLiveData
+    private val _formulaTextLiveData = MutableLiveData<String>()
+    val formulaTextLiveData: LiveData<String> = _formulaTextLiveData
 
     private val _historyLiveData = MutableLiveData<List<Formula>>()
     val historyLiveData: LiveData<List<Formula>> = _historyLiveData
 
-    private val _errorLiveData = MutableLiveData<String>()
-    val errorLiveData: LiveData<String> = _errorLiveData
+    private val _errorFlow = MutableSharedFlow<String>()
+    val errorFlow = _errorFlow.asSharedFlow()
 
     private var inputMode = true
 
@@ -42,7 +41,7 @@ class CalculatorViewModel @Inject constructor(
     }
 
     init {
-        _formulaLiveData.value = ""
+        _formulaTextLiveData.value = ""
     }
 
     fun setInputMode(mode: Boolean) {
@@ -50,27 +49,31 @@ class CalculatorViewModel @Inject constructor(
     }
 
     fun setFormula(formula: String) {
-        _formulaLiveData.value = formula
+        _formulaTextLiveData.value = formula
     }
 
     fun insertNumberToFormula(number: String) {
-        if (!inputMode) {
-            _errorLiveData.value = "AC를 눌러 초기화 후 사용해주세요"
-            return
+        viewModelScope.launch {
+            if (!inputMode) {
+                _errorFlow.emit("AC를 눌러 초기화 후 사용해주세요")
+                return@launch
+            }
+            _formulaTextLiveData.value = _formulaTextLiveData.value.plus(number)
         }
-        _formulaLiveData.value = _formulaLiveData.value.plus(number)
     }
 
     fun insertOperatorToFormula(operator: String) {
-        if (!inputMode) {
-            _errorLiveData.value = "AC를 눌러 초기화 후 사용해주세요"
-            return
+        viewModelScope.launch {
+            if (!inputMode) {
+                _errorFlow.emit("AC를 눌러 초기화 후 사용해주세요")
+                return@launch
+            }
+            _formulaTextLiveData.value = _formulaTextLiveData.value.plus(" $operator ")
         }
-        _formulaLiveData.value = _formulaLiveData.value.plus(" $operator ")
     }
 
     fun clearInput() {
-        _formulaLiveData.value = ""
+        _formulaTextLiveData.value = ""
         inputMode = true
     }
 
@@ -84,11 +87,11 @@ class CalculatorViewModel @Inject constructor(
         viewModelScope.launch(handler) {
             when (val result = calculateFormulaUseCase(formula)) {
                 is Result.Success -> {
-                    _resultLiveData.value = result.data ?: ""
+                    _formulaTextLiveData.value = result.data ?: ""
                     insertFormulaToHistoryUseCase(formula)
                 }
                 is Result.Error -> {
-                    _errorLiveData.value = "연산하는데 오류가 발생했습니다. 초기화 후 다시 입력해주세요"
+                    _errorFlow.emit("연산하는데 오류가 발생했습니다. 초기화 후 다시 입력해주세요")
                 }
             }
         }
@@ -101,7 +104,7 @@ class CalculatorViewModel @Inject constructor(
                     _historyLiveData.value = result.data ?: listOf()
                 }
                 is Result.Error -> {
-
+                    _errorFlow.emit("History를 불러오는데 오류가 발생했습니다.")
                 }
             }
         }
@@ -114,7 +117,7 @@ class CalculatorViewModel @Inject constructor(
                     _historyLiveData.value = listOf()
                 }
                 is Result.Error -> {
-
+                    _errorFlow.emit("History를 삭제하는데 오류가 발생했습니다.")
                 }
             }
         }
