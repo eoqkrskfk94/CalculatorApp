@@ -5,6 +5,5 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "formulas")
 data class Formula(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val content: String
+    @PrimaryKey val content: String
 )

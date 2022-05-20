@@ -31,9 +31,9 @@ class DefaultFormulaRepository @Inject constructor(
         }
     }
 
-    override suspend fun deleteFormulaFromHistory(formula: Formula): Result<Unit> = withContext(dispatcherProvider.io) {
+    override suspend fun deleteFormulaHistory(): Result<Unit> = withContext(dispatcherProvider.io) {
         return@withContext try {
-            val result = formulaDao.delete(formula)
+            val result = formulaDao.deleteAll()
             Result.Success(result)
         } catch (e: Exception) {
             Result.Error(e)

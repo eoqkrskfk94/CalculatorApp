@@ -3,11 +3,13 @@ package com.mj.calculatorapp.presentation.main.calculator
 
 import android.text.method.ScrollingMovementMethod
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.mj.calculatorapp.R
 import com.mj.calculatorapp.databinding.FragmentCalculatorBinding
 import com.mj.calculatorapp.presentation.base.BaseFragment
 import com.mj.calculatorapp.presentation.main.MainViewModel
+import com.mj.calculatorapp.presentation.main.calculator.adapter.HistoryListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -17,12 +19,18 @@ class CalculatorFragment : BaseFragment<MainViewModel, FragmentCalculatorBinding
     override val viewModel: MainViewModel by activityViewModels()
     override fun getViewBinding(): FragmentCalculatorBinding = FragmentCalculatorBinding.inflate(layoutInflater)
 
+    private lateinit var historyListAdapter: HistoryListAdapter
+
     override fun initViews() {
         super.initViews()
         setInputTextView()
         setCalculatorButtons()
+        setHistoryRecyclerView()
+        setHistoryCloseButton()
+        setHistoryDeleteButton()
 
     }
+
 
     override fun observeData() {
         viewModel.formulaLiveData.observe(viewLifecycleOwner) {
@@ -31,6 +39,10 @@ class CalculatorFragment : BaseFragment<MainViewModel, FragmentCalculatorBinding
 
         viewModel.resultLiveData.observe(viewLifecycleOwner) {
             binding.textviewResult.text = it
+        }
+
+        viewModel.historyLiveData.observe(viewLifecycleOwner) {
+            historyListAdapter.submitList(it)
         }
 
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
@@ -59,10 +71,36 @@ class CalculatorFragment : BaseFragment<MainViewModel, FragmentCalculatorBinding
         buttonMultiply.setOnClickListener { viewModel.addToFormula(getString(R.string.multiply)) }
         buttonDivide.setOnClickListener { viewModel.addToFormula(getString(R.string.divide)) }
         buttonAc.setOnClickListener { viewModel.clearInput() }
-        buttonHistory.setOnClickListener {}
+        buttonHistory.setOnClickListener { openHistoryList() }
+        buttonResult.setOnClickListener { viewModel.getResult(textviewResult.text.toString()) }
+    }
 
-        buttonResult.setOnClickListener {
-            viewModel.getResult(textviewResult.text.toString())
+    private fun setHistoryRecyclerView() = with(binding) {
+        historyListAdapter = HistoryListAdapter {
+            viewModel.setFormula(it.content)
+            viewModel.setInputMode(true)
+            linearlayoutCalculator.isVisible = true
+            constraintlayoutHistory.isVisible = false
+        }
+        recyclerviewHistory.adapter = historyListAdapter
+    }
+
+    private fun openHistoryList() = with(binding) {
+        linearlayoutCalculator.isVisible = false
+        constraintlayoutHistory.isVisible = true
+        viewModel.getHistory()
+    }
+
+    private fun setHistoryCloseButton() = with(binding) {
+        imageviewClose.setOnClickListener {
+            linearlayoutCalculator.isVisible = true
+            constraintlayoutHistory.isVisible = false
+        }
+    }
+
+    private fun setHistoryDeleteButton() = with(binding) {
+        imageviewDelete.setOnClickListener {
+            viewModel.deleteHistory()
         }
     }
 

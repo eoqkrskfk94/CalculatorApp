@@ -9,6 +9,6 @@ interface FormulaRepository {
 
     suspend fun insertFormulaToHistory(formula: Formula): Result<Unit>
 
-    suspend fun deleteFormulaFromHistory(formula: Formula): Result<Unit>
+    suspend fun deleteFormulaHistory(): Result<Unit>
 
 }

@@ -12,7 +12,7 @@ interface FormulaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(formula: Formula)
 
-    @Delete
-    suspend fun delete(formula: Formula)
+    @Query("DELETE FROM formulas")
+    suspend fun deleteAll()
 
 }

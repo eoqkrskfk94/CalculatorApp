@@ -1,5 +1,8 @@
 package com.mj.calculatorapp.di
 
+import com.mj.calculatorapp.data.datasource.FormulaDao
+import com.mj.calculatorapp.data.repsitory.DefaultFormulaRepository
+import com.mj.calculatorapp.domain.repository.FormulaRepository
 import com.mj.calculatorapp.util.provider.DefaultDispatcherProvider
 import com.mj.calculatorapp.util.provider.DispatcherProvider
 import dagger.Module
@@ -16,5 +19,13 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDispatcherProvider(): DispatcherProvider = DefaultDispatcherProvider()
+
+
+    @Singleton
+    @Provides
+    fun provideFormulaRepository(
+        formulaDao: FormulaDao,
+        dispatcherProvider: DispatcherProvider
+    ): FormulaRepository = DefaultFormulaRepository(formulaDao, dispatcherProvider)
 
 }
