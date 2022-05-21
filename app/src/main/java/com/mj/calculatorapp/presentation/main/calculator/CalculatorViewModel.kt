@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mj.calculatorapp.domain.model.Formula
-import com.mj.calculatorapp.domain.usecase.CalculateFormulaUseCase
-import com.mj.calculatorapp.domain.usecase.DeleteFormulaHistoryUseCase
-import com.mj.calculatorapp.domain.usecase.GetFormulaHistoryUseCase
-import com.mj.calculatorapp.domain.usecase.InsertFormulaToHistoryUseCase
+import com.mj.calculatorapp.domain.usecase.*
 import com.mj.calculatorapp.presentation.base.BaseViewModel
 import com.mj.calculatorapp.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +19,10 @@ class CalculatorViewModel @Inject constructor(
     private val calculateFormulaUseCase: CalculateFormulaUseCase,
     private val insertFormulaToHistoryUseCase: InsertFormulaToHistoryUseCase,
     private val getFormulaHistoryUseCase: GetFormulaHistoryUseCase,
-    private val deleteFormulaHistoryUseCase: DeleteFormulaHistoryUseCase
+    private val deleteFormulaHistoryUseCase: DeleteFormulaHistoryUseCase,
+    private val saveRecentFormulaUseCase: SaveRecentFormulaUseCase,
+    private val getRecentFormulaUseCase: GetRecentFormulaUseCase,
+    private val deleteRecentFormulaUseCase: DeleteRecentFormulaUseCase
 ) : BaseViewModel() {
 
     private val _formulaTextLiveData = MutableLiveData<String>()
@@ -41,8 +41,9 @@ class CalculatorViewModel @Inject constructor(
     }
 
     init {
-        _formulaTextLiveData.value = ""
+        _formulaTextLiveData.value = getRecentFormulaUseCase()
     }
+
 
     fun setInputMode(mode: Boolean) {
         inputMode = mode
@@ -89,12 +90,17 @@ class CalculatorViewModel @Inject constructor(
                 is Result.Success -> {
                     _formulaTextLiveData.value = result.data ?: ""
                     insertFormulaToHistoryUseCase(formula)
+                    deleteRecentFormulaUseCase()
                 }
                 is Result.Error -> {
                     _errorFlow.emit("연산하는데 오류가 발생했습니다. 초기화 후 다시 입력해주세요")
                 }
             }
         }
+    }
+
+    fun saveRecentFormula(formula: String) {
+        if (inputMode) saveRecentFormulaUseCase(formula)
     }
 
     fun getHistory() {
@@ -122,6 +128,4 @@ class CalculatorViewModel @Inject constructor(
             }
         }
     }
-
-
 }

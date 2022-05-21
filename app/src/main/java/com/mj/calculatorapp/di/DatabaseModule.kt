@@ -2,6 +2,7 @@ package com.mj.calculatorapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.mj.calculatorapp.data.datasource.AppPreferenceManager
 import com.mj.calculatorapp.data.datasource.FormulaDatabase
 import dagger.Module
 import dagger.Provides
@@ -22,5 +23,10 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideDao(database: FormulaDatabase) = database.formulaDao()
+
+    @Singleton
+    @Provides
+    fun provideAppPreference(@ApplicationContext context: Context): AppPreferenceManager =
+        AppPreferenceManager(context)
 
 }

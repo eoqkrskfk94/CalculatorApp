@@ -45,7 +45,6 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
     override fun observeData() {
 
         viewModel.formulaTextLiveData.observe(viewLifecycleOwner) {
-            println(it)
             binding.textviewResult.text = it
         }
 
@@ -125,6 +124,12 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
         imageviewDelete.setOnClickListener {
             viewModel.deleteHistory()
         }
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.saveRecentFormula(binding.textviewResult.text.toString())
     }
 
 
