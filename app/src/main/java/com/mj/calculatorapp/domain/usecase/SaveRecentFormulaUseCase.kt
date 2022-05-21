@@ -7,11 +7,11 @@ import com.mj.calculatorapp.util.Result
 import javax.inject.Inject
 
 class SaveRecentFormulaUseCase @Inject constructor(
-    private val appPreferenceManager: AppPreferenceManager
+    private val formulaRepository: FormulaRepository
 ) {
 
-    operator fun invoke(formula: String) {
-        return appPreferenceManager.setString(AppPreferenceManager.FORMULA, formula)
+    suspend operator fun invoke(formula: String): Result<Unit> {
+        return formulaRepository.saveRecentFormula(formula)
     }
 
 }

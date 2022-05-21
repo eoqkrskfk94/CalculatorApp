@@ -41,9 +41,22 @@ class CalculatorViewModel @Inject constructor(
     }
 
     init {
-        _formulaTextLiveData.value = getRecentFormulaUseCase()
+        _formulaTextLiveData.value = ""
+        setRecentFormula()
     }
 
+    private fun setRecentFormula() {
+        viewModelScope.launch(handler) {
+            when (val result = getRecentFormulaUseCase()) {
+                is Result.Success -> {
+                    _formulaTextLiveData.value = result.data ?: ""
+                }
+                is Result.Error -> {
+                    _errorFlow.emit("최근 기록을 불러오는데 오류가 발생했습니다")
+                }
+            }
+        }
+    }
 
     fun setInputMode(mode: Boolean) {
         inputMode = mode
@@ -100,7 +113,14 @@ class CalculatorViewModel @Inject constructor(
     }
 
     fun saveRecentFormula(formula: String) {
-        if (inputMode) saveRecentFormulaUseCase(formula)
+        if (!inputMode) return
+
+        viewModelScope.launch(handler) {
+            when (saveRecentFormulaUseCase(formula)) {
+                is Result.Success -> {}
+                is Result.Error -> {}
+            }
+        }
     }
 
     fun getHistory() {
@@ -118,7 +138,7 @@ class CalculatorViewModel @Inject constructor(
 
     fun deleteHistory() {
         viewModelScope.launch(handler) {
-            when (val result = deleteFormulaHistoryUseCase()) {
+            when (deleteFormulaHistoryUseCase()) {
                 is Result.Success -> {
                     _historyLiveData.value = listOf()
                 }

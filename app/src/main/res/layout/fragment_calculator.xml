@@ -55,7 +55,8 @@
                     android:layout_weight="1"
                     app:cardColor="@color/dark_gray"
                     app:cardElevation="0dp"
-                    app:symbol="history" />
+                    app:symbol="history"
+                    tools:ignore="NestedWeights" />
 
                 <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
                     android:id="@+id/button_ac"
@@ -97,7 +98,8 @@
                     android:layout_weight="1"
                     app:cardColor="@color/dark_gray"
                     app:cardElevation="0dp"
-                    app:symbol="7" />
+                    app:symbol="7"
+                    tools:ignore="NestedWeights" />
 
                 <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
                     android:id="@+id/button_8"
@@ -142,7 +144,8 @@
                     android:layout_weight="1"
                     app:cardColor="@color/dark_gray"
                     app:cardElevation="0dp"
-                    app:symbol="4" />
+                    app:symbol="4"
+                    tools:ignore="NestedWeights" />
 
                 <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
                     android:id="@+id/button_5"
@@ -187,7 +190,8 @@
                     android:layout_weight="1"
                     app:cardColor="@color/dark_gray"
                     app:cardElevation="0dp"
-                    app:symbol="1" />
+                    app:symbol="1"
+                    tools:ignore="NestedWeights" />
 
                 <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton
                     android:id="@+id/button_2"
@@ -233,7 +237,8 @@
                     android:layout_weight="1"
                     app:cardColor="@color/dark_gray"
                     app:cardElevation="0dp"
-                    app:symbol="0" />
+                    app:symbol="0"
+                    tools:ignore="NestedWeights" />
 
 
                 <com.mj.calculatorapp.presentation.main.calculator.CalculatorButton

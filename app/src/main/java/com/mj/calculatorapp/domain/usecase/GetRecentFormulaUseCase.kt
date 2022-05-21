@@ -7,11 +7,11 @@ import com.mj.calculatorapp.util.Result
 import javax.inject.Inject
 
 class GetRecentFormulaUseCase @Inject constructor(
-    private val appPreferenceManager: AppPreferenceManager
+    private val formulaRepository: FormulaRepository
 ) {
 
-    operator fun invoke(): String {
-        return appPreferenceManager.getString(AppPreferenceManager.FORMULA) ?: ""
+    suspend operator fun invoke(): Result<String> {
+        return formulaRepository.getResentFormula()
     }
 
 }

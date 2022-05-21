@@ -11,4 +11,10 @@ interface FormulaRepository {
 
     suspend fun deleteFormulaHistory(): Result<Unit>
 
+    suspend fun getResentFormula(): Result<String>
+
+    suspend fun saveRecentFormula(formula: String): Result<Unit>
+
+    suspend fun deleteRecentFormula(): Result<Unit>
+
 }
