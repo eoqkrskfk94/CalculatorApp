@@ -12,14 +12,27 @@ class CalculateFormulaUseCase @Inject constructor(
 
     suspend operator fun invoke(formula: String): Result<String> = withContext(dispatcherProvider.default) {
         return@withContext try {
-            val result = infixToPostfix(formula)
+            val result = getResult(infixToPostfix(formula)).trimEnd { it == '0' }.trimEnd { it == '.' }
             Result.Success(result)
         } catch (e: Exception) {
             Result.Error(e)
         }
     }
 
-    private fun infixToPostfix(formula: String): String {
+    private fun getResult(postfixList: MutableList<String>): String {
+        var index = 0
+        while (postfixList.size != 1) {
+            if (!isNumber(postfixList[index])) {
+                val result = calculate(postfixList.removeAt(index - 2), postfixList.removeAt(index - 2), postfixList.removeAt(index - 2))
+                postfixList.add(index - 2, result)
+                index = -1
+            }
+            index++
+        }
+        return postfixList[0]
+    }
+
+    private fun infixToPostfix(formula: String): MutableList<String> {
         val infixList = formula.split(" ")
         val postfixList = mutableListOf<String>()
         val operatorStack = Stack<String>()
@@ -38,21 +51,10 @@ class CalculateFormulaUseCase @Inject constructor(
         }
         while (operatorStack.isNotEmpty()) postfixList.add(operatorStack.pop())
 
-        return getResult(postfixList)
+        return postfixList
     }
 
-    private fun getResult(postfixList: MutableList<String>): String {
-        var index = 0
-        while (postfixList.size != 1) {
-            if (!isNumber(postfixList[index])) {
-                val result = calculate(postfixList.removeAt(index - 2), postfixList.removeAt(index - 2), postfixList.removeAt(index - 2))
-                postfixList.add(index - 2, result)
-                index = -1
-            }
-            index++
-        }
-        return postfixList[0]
-    }
+
 
     private fun calculate(num1: String, num2: String, operator: String): String {
         val firstNumber = num1.toDouble()

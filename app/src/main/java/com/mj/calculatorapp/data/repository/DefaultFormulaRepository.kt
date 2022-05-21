@@ -1,4 +1,4 @@
-package com.mj.calculatorapp.data.repsitory
+package com.mj.calculatorapp.data.repository
 
 import com.mj.calculatorapp.data.datasource.AppPreferenceManager
 import com.mj.calculatorapp.data.datasource.FormulaDao

@@ -2,7 +2,7 @@ package com.mj.calculatorapp.di
 
 import com.mj.calculatorapp.data.datasource.AppPreferenceManager
 import com.mj.calculatorapp.data.datasource.FormulaDao
-import com.mj.calculatorapp.data.repsitory.DefaultFormulaRepository
+import com.mj.calculatorapp.data.repository.DefaultFormulaRepository
 import com.mj.calculatorapp.domain.repository.FormulaRepository
 import com.mj.calculatorapp.util.provider.DefaultDispatcherProvider
 import com.mj.calculatorapp.util.provider.DispatcherProvider
