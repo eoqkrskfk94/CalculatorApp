@@ -45,6 +45,8 @@ class CalculatorViewModel @Inject constructor(
         setRecentFormula()
     }
 
+
+
     fun setRecentFormula() {
         viewModelScope.launch(handler) {
             when (val result = getRecentFormulaUseCase()) {

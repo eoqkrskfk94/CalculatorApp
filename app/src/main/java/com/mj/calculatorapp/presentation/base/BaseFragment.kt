@@ -21,9 +21,13 @@ abstract class BaseFragment<VM: BaseViewModel, VB: ViewBinding>: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = getViewBinding()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initViews()
         observeData()
-        return binding.root
     }
 
     open fun initViews() = Unit
