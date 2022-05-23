@@ -71,7 +71,6 @@ class CalculateFormulaUseCase @Inject constructor(
         } catch (e: Exception) {
 
         }
-
         return result.toString()
     }
 

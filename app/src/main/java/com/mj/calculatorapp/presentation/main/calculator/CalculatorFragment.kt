@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.mj.calculatorapp.R
 import com.mj.calculatorapp.databinding.FragmentCalculatorBinding
 import com.mj.calculatorapp.presentation.base.BaseFragment
 import com.mj.calculatorapp.presentation.main.calculator.adapter.HistoryListAdapter
