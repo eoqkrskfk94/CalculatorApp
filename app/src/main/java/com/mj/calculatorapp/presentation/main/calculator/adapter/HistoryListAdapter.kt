@@ -25,7 +25,6 @@ class HistoryListAdapter(
 
         fun bind(formula: Formula) = with(binding) {
             textviewTitle.text = formula.content
-
             constraintlayoutSearchHistory.setOnClickListener { itemClick(formula) }
         }
     }

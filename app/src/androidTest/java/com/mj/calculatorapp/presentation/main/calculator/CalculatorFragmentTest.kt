@@ -77,22 +77,6 @@ class CalculatorFragmentTest {
     }
 
 
-//    @Test
-//    fun calculateInValidMathExpressionTest() {
-//        onView(withId(R.id.button_2)).perform(click())
-//        onView(withId(R.id.button_multiply)).perform(click())
-//        onView(withId(R.id.button_multiply)).perform(click())
-//        onView(withId(R.id.button_1)).perform(click())
-//
-//        onView(withId(R.id.button_result)).perform(click())
-//
-//
-//
-//        onView(withText("연산하는데 오류가 발생했습니다. 초기화 후 다시 입력해주세요"))
-//            .inRoot(ToastMatcher("연산하는데 오류가 발생했습니다. 초기화 후 다시 입력해주세요"))
-//            .check(matches(isDisplayed()))
-//    }
-
 
     @Test
     fun historyShowUpTest() {

@@ -1,7 +1,5 @@
 package com.mj.calculatorapp.presentation.main
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.mj.calculatorapp.R
