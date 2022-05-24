@@ -7,7 +7,7 @@ import com.mj.calculatorapp.domain.usecase.*
 import com.mj.calculatorapp.util.TestDispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.google.common.truth.Truth.assertThat
-import com.mj.calculatorapp.domain.model.Formula
+import com.mj.calculatorapp.data.model.FormulaEntity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.junit.jupiter.api.BeforeEach
@@ -22,7 +22,6 @@ class CalculatorViewModelTest {
 
 
     companion object {
-        @JvmField
         @RegisterExtension
         val mainCoroutineExtension = MainCoroutineExtension()
     }
@@ -36,7 +35,7 @@ class CalculatorViewModelTest {
     fun setUp() {
         testDispatcherProvider = TestDispatcherProvider(mainCoroutineExtension.testDispatcher)
         fakeFormulaRepository = FakeFormulaRepository()
-        val calculateFormulaUseCase = CalculateFormulaUseCase(testDispatcherProvider)
+        val getFormulaCalculationUseCase = GetFormulaCalculationUseCase(testDispatcherProvider)
         val insertFormulaToHistoryUseCase = InsertFormulaToHistoryUseCase(fakeFormulaRepository)
         val getFormulaHistoryUseCase = GetFormulaHistoryUseCase(fakeFormulaRepository)
         val deleteFormulaHistoryUseCase = DeleteFormulaHistoryUseCase(fakeFormulaRepository)
@@ -44,7 +43,7 @@ class CalculatorViewModelTest {
         val getRecentFormulaUseCase = GetRecentFormulaUseCase(fakeFormulaRepository)
         val deleteRecentFormulaUseCase = DeleteRecentFormulaUseCase(fakeFormulaRepository)
         viewModel = CalculatorViewModel(
-            calculateFormulaUseCase,
+            getFormulaCalculationUseCase,
             insertFormulaToHistoryUseCase,
             getFormulaHistoryUseCase,
             deleteFormulaHistoryUseCase,
@@ -135,16 +134,14 @@ class CalculatorViewModelTest {
     @Test
     fun getHistoryTest() {
         val expectedAnswer = fakeFormulaRepository.formulas
-
         viewModel.getHistory()
-
         assertThat(viewModel.historyLiveData.value).isEqualTo(expectedAnswer)
     }
 
     @Test
     fun deleteHistoryTest() {
         viewModel.deleteHistory()
-        assertThat(fakeFormulaRepository.formulas).isEqualTo(listOf<Formula>())
+        assertThat(fakeFormulaRepository.formulas).isEqualTo(listOf<FormulaEntity>())
     }
 
 

@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CalculatorViewModel @Inject constructor(
-    private val calculateFormulaUseCase: CalculateFormulaUseCase,
+    private val getFormulaCalculationUseCase: GetFormulaCalculationUseCase,
     private val insertFormulaToHistoryUseCase: InsertFormulaToHistoryUseCase,
     private val getFormulaHistoryUseCase: GetFormulaHistoryUseCase,
     private val deleteFormulaHistoryUseCase: DeleteFormulaHistoryUseCase,
@@ -101,7 +101,7 @@ class CalculatorViewModel @Inject constructor(
         inputMode = false
 
         viewModelScope.launch(handler) {
-            when (val result = calculateFormulaUseCase(formula)) {
+            when (val result = getFormulaCalculationUseCase(formula)) {
                 is Result.Success -> {
                     _formulaTextLiveData.value = result.data ?: ""
                     insertFormulaToHistoryUseCase(formula)

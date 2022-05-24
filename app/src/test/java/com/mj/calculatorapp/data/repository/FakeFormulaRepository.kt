@@ -1,5 +1,6 @@
 package com.mj.calculatorapp.data.repository
 
+import com.mj.calculatorapp.data.model.FormulaEntity
 import com.mj.calculatorapp.domain.model.Formula
 import com.mj.calculatorapp.domain.repository.FormulaRepository
 import com.mj.calculatorapp.util.Result

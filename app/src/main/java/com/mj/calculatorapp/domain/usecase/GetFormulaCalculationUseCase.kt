@@ -6,7 +6,7 @@ import com.mj.calculatorapp.util.Result
 import java.util.*
 import javax.inject.Inject
 
-class CalculateFormulaUseCase @Inject constructor(
+class GetFormulaCalculationUseCase @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) {
 

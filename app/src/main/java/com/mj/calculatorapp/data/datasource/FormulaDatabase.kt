@@ -2,10 +2,10 @@ package com.mj.calculatorapp.data.datasource
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.mj.calculatorapp.domain.model.Formula
+import com.mj.calculatorapp.data.model.FormulaEntity
 
 @Database(
-    entities = [Formula::class],
+    entities = [FormulaEntity::class],
     version = 1,
     exportSchema = false
 )

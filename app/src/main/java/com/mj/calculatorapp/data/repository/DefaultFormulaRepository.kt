@@ -2,6 +2,9 @@ package com.mj.calculatorapp.data.repository
 
 import com.mj.calculatorapp.data.datasource.AppPreferenceManager
 import com.mj.calculatorapp.data.datasource.FormulaDao
+import com.mj.calculatorapp.data.mapper.mapperToFormula
+import com.mj.calculatorapp.data.mapper.toFormulaEntity
+import com.mj.calculatorapp.data.model.FormulaEntity
 import com.mj.calculatorapp.domain.model.Formula
 import com.mj.calculatorapp.domain.repository.FormulaRepository
 import com.mj.calculatorapp.util.Result
@@ -17,7 +20,7 @@ class DefaultFormulaRepository @Inject constructor(
 
     override suspend fun getAllFormulaHistory(): Result<List<Formula>> = withContext(dispatcherProvider.io) {
         return@withContext try {
-            val result = formulaDao.getAll()
+            val result = mapperToFormula(formulaDao.getAll())
             Result.Success(result)
         } catch (e: Exception) {
             Result.Error(e)
@@ -26,7 +29,7 @@ class DefaultFormulaRepository @Inject constructor(
 
     override suspend fun insertFormulaToHistory(formula: Formula): Result<Unit> = withContext(dispatcherProvider.io) {
         return@withContext try {
-            val result = formulaDao.insert(formula)
+            val result = formulaDao.insert(formula.toFormulaEntity())
             Result.Success(result)
         } catch (e: Exception) {
             Result.Error(e)
