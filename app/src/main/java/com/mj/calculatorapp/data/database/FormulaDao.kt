@@ -1,4 +1,4 @@
-package com.mj.calculatorapp.data.datasource
+package com.mj.calculatorapp.data.database
 
 import androidx.room.*
 import com.mj.calculatorapp.data.model.FormulaEntity

@@ -1,8 +1,8 @@
 package com.mj.calculatorapp.di
 
-import com.mj.calculatorapp.data.datasource.AppPreferenceManager
-import com.mj.calculatorapp.data.datasource.FormulaDao
-import com.mj.calculatorapp.data.repository.DefaultFormulaRepository
+import com.mj.calculatorapp.data.database.FormulaPreference
+import com.mj.calculatorapp.data.database.FormulaDao
+import com.mj.calculatorapp.data.repository.FormulaRepositoryImpl
 import com.mj.calculatorapp.domain.repository.FormulaRepository
 import com.mj.calculatorapp.util.provider.DefaultDispatcherProvider
 import com.mj.calculatorapp.util.provider.DispatcherProvider
@@ -25,8 +25,8 @@ object AppModule {
     @Provides
     fun provideFormulaRepository(
         formulaDao: FormulaDao,
-        appPreferenceManager: AppPreferenceManager,
+        formulaPreference: FormulaPreference,
         dispatcherProvider: DispatcherProvider
-    ): FormulaRepository = DefaultFormulaRepository(formulaDao, appPreferenceManager, dispatcherProvider)
+    ): FormulaRepository = FormulaRepositoryImpl(formulaDao, formulaPreference, dispatcherProvider)
 
 }

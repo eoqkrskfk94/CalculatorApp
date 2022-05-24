@@ -2,8 +2,8 @@ package com.mj.calculatorapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.mj.calculatorapp.data.datasource.AppPreferenceManager
-import com.mj.calculatorapp.data.datasource.FormulaDatabase
+import com.mj.calculatorapp.data.database.FormulaPreference
+import com.mj.calculatorapp.data.database.FormulaDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideAppPreference(@ApplicationContext context: Context): AppPreferenceManager =
-        AppPreferenceManager(context)
+    fun provideAppPreference(@ApplicationContext context: Context): FormulaPreference =
+        FormulaPreference(context)
 
 }

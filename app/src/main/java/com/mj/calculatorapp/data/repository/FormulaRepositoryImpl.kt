@@ -1,10 +1,9 @@
 package com.mj.calculatorapp.data.repository
 
-import com.mj.calculatorapp.data.datasource.AppPreferenceManager
-import com.mj.calculatorapp.data.datasource.FormulaDao
+import com.mj.calculatorapp.data.database.FormulaPreference
+import com.mj.calculatorapp.data.database.FormulaDao
 import com.mj.calculatorapp.data.mapper.mapperToFormula
 import com.mj.calculatorapp.data.mapper.toFormulaEntity
-import com.mj.calculatorapp.data.model.FormulaEntity
 import com.mj.calculatorapp.domain.model.Formula
 import com.mj.calculatorapp.domain.repository.FormulaRepository
 import com.mj.calculatorapp.util.Result
@@ -12,9 +11,9 @@ import com.mj.calculatorapp.util.provider.DispatcherProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class DefaultFormulaRepository @Inject constructor(
+class FormulaRepositoryImpl @Inject constructor(
     private val formulaDao: FormulaDao,
-    private val appPreferenceManager: AppPreferenceManager,
+    private val formulaPreference: FormulaPreference,
     private val dispatcherProvider: DispatcherProvider
 ) : FormulaRepository {
 
@@ -47,25 +46,25 @@ class DefaultFormulaRepository @Inject constructor(
 
     override suspend fun getResentFormula(): Result<String> = withContext(dispatcherProvider.io) {
         return@withContext try {
-            val result = appPreferenceManager.getString(AppPreferenceManager.FORMULA) ?: ""
+            val result = formulaPreference.getRecentFormula()
             Result.Success(result)
         } catch (e: Exception) {
             Result.Error(e)
         }
     }
 
-    override suspend fun saveRecentFormula(formula: String): Result<Unit> = withContext(dispatcherProvider.io)  {
+    override suspend fun saveRecentFormula(formula: String): Result<Unit> = withContext(dispatcherProvider.io) {
         return@withContext try {
-            val result = appPreferenceManager.setString(AppPreferenceManager.FORMULA, formula)
+            val result = formulaPreference.setRecentFormula(formula)
             Result.Success(result)
         } catch (e: Exception) {
             Result.Error(e)
         }
     }
 
-    override suspend fun deleteRecentFormula(): Result<Unit> = withContext(dispatcherProvider.io)  {
+    override suspend fun deleteRecentFormula(): Result<Unit> = withContext(dispatcherProvider.io) {
         return@withContext try {
-            val result = appPreferenceManager.removeString(AppPreferenceManager.FORMULA)
+            val result = formulaPreference.removeRecentFormula()
             Result.Success(result)
         } catch (e: Exception) {
             Result.Error(e)

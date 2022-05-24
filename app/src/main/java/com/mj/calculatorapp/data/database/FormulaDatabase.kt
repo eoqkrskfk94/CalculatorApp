@@ -1,4 +1,4 @@
-package com.mj.calculatorapp.data.datasource
+package com.mj.calculatorapp.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -1,9 +1,9 @@
-package com.mj.calculatorapp.data.datasource
+package com.mj.calculatorapp.data.database
 
 import android.content.Context
 import android.content.SharedPreferences
 
-class AppPreferenceManager(private val context: Context) {
+class FormulaPreference(private val context: Context) {
 
     companion object {
         const val PREFERENCES_NAME = "calculator"
@@ -19,17 +19,17 @@ class AppPreferenceManager(private val context: Context) {
 
     private val editor by lazy { prefs.edit() }
 
-    fun setString(key: String?, value: String?) {
-        editor.putString(key, value)
+    fun setRecentFormula(formula: String) {
+        editor.putString(FORMULA, formula)
         editor.apply()
     }
 
-    fun getString(key: String?): String? {
-        return prefs.getString(key, DEFAULT_VALUE_STRING)
+    fun getRecentFormula(): String {
+        return prefs.getString(FORMULA, DEFAULT_VALUE_STRING) ?: ""
     }
 
-    fun removeString(key: String?) {
-        editor.remove(key)
+    fun removeRecentFormula() {
+        editor.remove(FORMULA)
         editor.apply()
     }
 
