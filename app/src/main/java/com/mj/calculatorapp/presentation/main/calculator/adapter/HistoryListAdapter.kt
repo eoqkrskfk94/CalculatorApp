@@ -14,18 +14,27 @@ class HistoryListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = ViewholderFormulaHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ListViewHolder(binding)
+        return ListViewHolder(binding) {
+            itemClick(currentList[it])
+        }
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class ListViewHolder(private val binding: ViewholderFormulaHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ListViewHolder(private val binding: ViewholderFormulaHistoryBinding, clickAtPosition: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.constraintlayoutSearchHistory.setOnClickListener {
+                clickAtPosition(adapterPosition)
+            }
+        }
+
 
         fun bind(formula: Formula) = with(binding) {
             textviewTitle.text = formula.content
-            constraintlayoutSearchHistory.setOnClickListener { itemClick(formula) }
+            //constraintlayoutSearchHistory.setOnClickListener { itemClick(formula) }
         }
     }
 

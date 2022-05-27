@@ -114,16 +114,18 @@ class CalculatorViewModel @Inject constructor(
         }
     }
 
-    fun saveRecentFormula(formula: String) {
+    fun saveRecentFormula() {
         if (!inputMode) return
 
         viewModelScope.launch(handler) {
-            when (saveRecentFormulaUseCase(formula)) {
+            when (saveRecentFormulaUseCase(_formulaTextLiveData.value ?: "")) {
                 is Result.Success -> {}
                 is Result.Error -> {}
             }
         }
     }
+
+
 
     fun getHistory() {
         viewModelScope.launch(handler) {
