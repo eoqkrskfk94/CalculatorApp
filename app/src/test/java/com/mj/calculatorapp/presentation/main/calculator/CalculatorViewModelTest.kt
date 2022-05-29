@@ -51,6 +51,7 @@ class CalculatorViewModelTest {
             getRecentFormulaUseCase,
             deleteRecentFormulaUseCase
         )
+        viewModel.clearInput()
     }
 
     @Test
@@ -64,7 +65,6 @@ class CalculatorViewModelTest {
 
     @Test
     fun setFormulaTest() {
-        viewModel.clearInput()
         val expectedAnswer = "1 + 1 × 5.555555"
         viewModel.setFormula(expectedAnswer)
 
@@ -73,7 +73,6 @@ class CalculatorViewModelTest {
 
     @Test
     fun clearInputTest() {
-        viewModel.clearInput()
         viewModel.setFormula("12345")
         viewModel.clearInput()
         assertThat(viewModel.formulaTextLiveData.value).isEqualTo("")
@@ -81,7 +80,6 @@ class CalculatorViewModelTest {
 
     @Test
     fun insertNumberToFormulaTest() {
-        viewModel.clearInput()
         val expectedAnswer = "15.2"
         viewModel.insertNumberToFormula("1")
         viewModel.insertNumberToFormula("5")
@@ -93,7 +91,6 @@ class CalculatorViewModelTest {
 
     @Test
     fun insertOperatorToFormula() {
-        viewModel.clearInput()
         val expectedAnswer = "631 × 5"
         viewModel.insertNumberToFormula("6")
         viewModel.insertNumberToFormula("3")
@@ -106,7 +103,6 @@ class CalculatorViewModelTest {
 
     @Test
     fun `valid formula returns correct answer`() {
-        viewModel.clearInput()
         val expectedAnswer = "6"
         viewModel.getResult("2 × 1.5 + 6 ÷ 2")
 
@@ -115,7 +111,6 @@ class CalculatorViewModelTest {
 
     @Test
     fun `invalid formula returns error message`() = mainCoroutineExtension.runBlockingTest {
-        viewModel.clearInput()
         val expectedAnswer = "연산하는데 오류가 발생했습니다. 초기화 후 다시 입력해주세요"
         var resultAnswer = ""
 

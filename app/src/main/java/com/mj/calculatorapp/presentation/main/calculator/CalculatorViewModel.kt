@@ -31,6 +31,9 @@ class CalculatorViewModel @Inject constructor(
     private val _historyLiveData = MutableLiveData<List<Formula>>()
     val historyLiveData: LiveData<List<Formula>> = _historyLiveData
 
+    private val _historyOpenLiveData = MutableLiveData<Boolean>()
+    val historyOpenLiveData: LiveData<Boolean> = _historyOpenLiveData
+
     private val _errorFlow = MutableSharedFlow<String>()
     val errorFlow = _errorFlow.asSharedFlow()
 
@@ -125,6 +128,14 @@ class CalculatorViewModel @Inject constructor(
         }
     }
 
+    fun openHistory() {
+        _historyOpenLiveData.value = true
+        getHistory()
+    }
+
+    fun closeHistory() {
+        _historyOpenLiveData.value = false
+    }
 
 
     fun getHistory() {
@@ -151,5 +162,10 @@ class CalculatorViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        saveRecentFormula()
     }
 }

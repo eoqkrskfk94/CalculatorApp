@@ -6,10 +6,6 @@
     <data>
 
         <variable
-            name="fragment"
-            type="com.mj.calculatorapp.presentation.main.calculator.CalculatorFragment" />
-
-        <variable
             name="vm"
             type="com.mj.calculatorapp.presentation.main.calculator.CalculatorViewModel" />
 
@@ -62,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{()->fragment.openHistoryList()}"
+                    android:onClick="@{()->vm.openHistory()}"
                     app:cardColor="@color/dark_gray"
                     app:cardElevation="0dp"
                     app:symbol="history"
@@ -324,7 +320,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:onClick="@{()->fragment.closeHistoryList()}"
+                android:onClick="@{()->vm.closeHistory()}"
                 android:padding="10dp"
                 android:src="@drawable/ic_arrow_back"
                 app:layout_constraintStart_toStartOf="parent"

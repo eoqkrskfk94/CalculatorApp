@@ -33,6 +33,20 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
 
     override fun observeData() {
 
+        viewModel.historyOpenLiveData.observe(viewLifecycleOwner) {
+            when(it) {
+                true -> {
+                    binding.linearlayoutCalculator.isVisible = false
+                    binding.constraintlayoutHistory.isVisible = true
+                    viewModel.getHistory()
+                }
+                false -> {
+                    binding.linearlayoutCalculator.isVisible = true
+                    binding.constraintlayoutHistory.isVisible = false
+                }
+            }
+        }
+
         viewModel.historyLiveData.observe(viewLifecycleOwner) {
             historyListAdapter.submitList(it)
         }
@@ -46,7 +60,6 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
 
     private fun setDatabinding() = with(binding) {
         vm = viewModel
-        fragment = this@CalculatorFragment
         lifecycleOwner = viewLifecycleOwner
     }
 
@@ -64,22 +77,7 @@ class CalculatorFragment : BaseFragment<CalculatorViewModel, FragmentCalculatorB
         }
     }
 
-    fun openHistoryList() = with(binding) {
-        linearlayoutCalculator.isVisible = false
-        constraintlayoutHistory.isVisible = true
-        viewModel.getHistory()
-    }
 
-    fun closeHistoryList() = with(binding) {
-        linearlayoutCalculator.isVisible = true
-        constraintlayoutHistory.isVisible = false
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.saveRecentFormula(binding.textviewResult.text.toString())
-    }
 
 
     companion object {
